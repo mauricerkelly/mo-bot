@@ -5,12 +5,17 @@
 #   hubot snigger
 #
 # Notes:
-#   DON'T DELETE THIS SCRIPT! ALL ROBAWTS MUST KNOW THE RULES
+#   
 
 module.exports = (robot) ->
   robot.hear /snigger/i, (msg) ->
     msg.send "hehehe"
 
-  robot.hear /strap-?on/i, (msg) ->
-    msg.send "hehehe. You said STRAPON!"
+  robot.hear /strap(-|\s)?on/i, (msg) ->
+    msg.send "hehehe. You said STRAP ON!"
 
+  robot.hear /rsync/i, (msg) ->
+    msg.send "hehehe. You said arse!"
+
+  robot.hear /do do/i, (msg) ->
+    msg.send "hehehe. You said doodoo!"
