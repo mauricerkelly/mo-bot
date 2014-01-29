@@ -2,7 +2,7 @@
 #   Determine if it's time for ice cream yet
 #
 # Dependencies:
-#   None
+#   "cheerio": "0.7.0"
 #
 # Configuration:
 #   None
