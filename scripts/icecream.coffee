@@ -20,8 +20,8 @@
 cheerio = require('cheerio')
 
 module.exports = (robot) ->
-  robot.respond /is it time for ice cream yet/i, (msg) ->
-    msg.send "YES!"
+  robot.hear /is it time for ice\s?cream yet/i, (msg) ->
+    msg.send "YES! (It's always time for ice cream!)"
     return
     
     url = "http://isittimeforicecreamyet.com/"
