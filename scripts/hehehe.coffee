@@ -11,3 +11,6 @@ module.exports = (robot) ->
   robot.hear /snigger/i, (msg) ->
     msg.send "hehehe"
 
+  robot.hear /strap-?on/i, (msg) ->
+    msg.send "hehehe. You said STRAPON!"
+
