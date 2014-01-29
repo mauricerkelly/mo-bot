@@ -24,4 +24,4 @@ module.exports = (robot) ->
     msg.send "hehehe. You said doodie!"
   
   robot.hear /\wso big\w/i, (msg) ->
-    msg.send That's what she said! hehehe."
+    msg.send "That's what she said! hehehe."
