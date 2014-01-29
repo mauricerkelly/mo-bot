@@ -19,3 +19,6 @@ module.exports = (robot) ->
 
   robot.hear /do do/i, (msg) ->
     msg.send "hehehe. You said doodoo!"
+
+  robot.hear /duty/i, (msg) ->
+    msg.send "hehehe. You said doodie!"
