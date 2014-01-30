@@ -25,3 +25,6 @@ module.exports = (robot) ->
   
   robot.hear /so big/i, (msg) ->
     msg.send "That's what she said! hehehe."
+
+  robot.hear /json/i, (msg) ->
+    msg.send "hehehe. You said GAYSON!"
