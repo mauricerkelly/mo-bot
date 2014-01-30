@@ -23,5 +23,5 @@ module.exports = (robot) ->
   robot.hear /duty/i, (msg) ->
     msg.send "hehehe. You said doodie!"
   
-  robot.hear /\wso big\w/i, (msg) ->
+  robot.hear /so big/i, (msg) ->
     msg.send "That's what she said! hehehe."
