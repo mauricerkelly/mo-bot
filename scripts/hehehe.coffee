@@ -43,7 +43,7 @@ module.exports = (robot) ->
     robot.hear pattern, (msg) ->
       current_count = hehehe.get(msg.match[1])
       console.log current_count
-      if current_count == null or current_count == undefined
+      if current_count == null or current_count == undefined or current_count < 0
         current_count = 0
       if current_count == 0
         msg.send snigger_triggers[msg.match[1]]
