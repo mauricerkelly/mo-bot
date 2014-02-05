@@ -24,7 +24,7 @@ module.exports = (robot) ->
     console.log user
     user.reply_to = user.jid if IN_HIPCHAT
     console.log user
-    msg.send user, 'Psssst! I hear you want to buy some drugs...'
+    robot.send user, 'Psssst! I hear you want to buy some drugs...'
   # for drug in drug_triggers
   #   pattern = new RegExp("(#{drug})", 'i')
 
