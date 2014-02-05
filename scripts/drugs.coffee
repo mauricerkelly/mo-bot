@@ -18,13 +18,13 @@ drug_triggers = [
 IN_HIPCHAT = process.env.HUBOT_HIPCHAT_JID?
 
 module.exports = (robot) ->
-
   robot.hear /nurofen/i, (msg) ->
+    console.log "Status"
     user = msg.message.user
     console.log user
     user.reply_to = user.jid if IN_HIPCHAT
     console.log user
-    robot.send user, 'Psssst! I hear you want to buy some drugs...'
+    msg.send user, 'Psssst! I hear you want to buy some drugs...'
   # for drug in drug_triggers
   #   pattern = new RegExp("(#{drug})", 'i')
 
