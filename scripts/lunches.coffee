@@ -61,11 +61,16 @@ module.exports = (robot) ->
     return
 
   robot.hear /show orders/i, (msg) ->
+    order_list = ""
     for own user, order of lunches.all_orders()
-      msg.send user + ": " + order
+      order_list += user + ": " + order + "\n"
+      # msg.send user + ": " + order
 
     if (robot.brain.data.lunches.last)
-      msg.send "Last order by: " + robot.brain.data.lunches.last
+      order_list += "Last order by: " + robot.brain.data.lunches.last
+
+    if order_list != ""
+      msg.send order_list
     return
 
   robot.hear /clear orders/i, (msg) ->
