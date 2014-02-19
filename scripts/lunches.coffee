@@ -1,34 +1,17 @@
 # Description:
-#   Snigger at all the things.
+#   Manage lunch ordering
 #
 # Commands:
-#   hubot snigger
+#   hubot lunch help
 #
 # Notes:
 #   
-
-random_values = [
-  3,
-  4,
-  5,
-  6,
-  7,
-  8]
-
-snigger_triggers =
-  "snigger": "hehehe",
-  "guffaw": "HAHAHA",
-  "strap on": "hehehe. You said STRAP ON!",
-  "rsync": "hehehe. You said arse!",
-  "do do": "hehehe. You said doodoo!",
-  "duty": "hehehe. You said doodie!",
-  "so big": "That's what she said! hehehe.",
-  "json": "hehehe. You said GAYSON!"
 
 module.exports = (robot) ->
 
   robot.brain.data.lunches =
     orders: {}
+    last: []
 
   lunches =
     get: (name) ->
@@ -36,49 +19,57 @@ module.exports = (robot) ->
 
     add: (name, order) ->
       robot.brain.data.lunches.orders[name] = order
-      robot.brain.data.lunches.last = name
+      if name not in robot.brain.data.lunches.last
+        robot.brain.data.lunches.last.push(name)
  
     all_orders: () ->
       return robot.brain.data.lunches.orders
 
     cancel: (name) ->
       delete robot.brain.data.lunches.orders[name]
+      user_index = robot.brain.data.lunches.last.indexOf name
+      if user_index isnt -1
+        robot.brain.data.lunches.last.splice(user_index, 1)
 
     clear: () ->
       robot.brain.data.lunches.orders = {}
-      delete robot.brain.data.lunches.last
+      robot.brain.data.lunches.last = []
 
-  robot.hear /order me (.*)/i, (msg) ->
+    last_order: () ->
+      robot.brain.data.lunches.last[robot.brain.data.lunches.last.length - 1]
+
+    order_count: () ->
+      Object.keys(robot.brain.data.lunches.orders).length
+
+  robot.hear /^order me (.*)$/i, (msg) ->
     username = msg.message.user.name
-    msg.send "So you want to order: " + msg.match[1]
+    msg.send "Got it"
     lunches.add(username, msg.match[1])
     return
 
-  robot.hear /what'?s my/i, (msg) ->
+  robot.hear /^show my order$/i, (msg) ->
     username = msg.message.user.name
-    console.log msg.message.user
-    msg.send username + " ordered: " + lunches.get(username)
+    msg.send lunches.get(username) + " (by " + username + ")"
     return
 
-  robot.hear /show orders/i, (msg) ->
+  robot.hear /^show all orders$/i, (msg) ->
     order_list = ""
     for own user, order of lunches.all_orders()
-      order_list += user + ": " + order + "\n"
-      # msg.send user + ": " + order
+      order_list += order + " (by " + user + ")\n"
 
-    if (robot.brain.data.lunches.last)
-      order_list += "Last order by: " + robot.brain.data.lunches.last
+    if (lunches.order_count() > 0)
+      order_list += "Last order by: " + lunches.last_order()
 
-    if order_list != ""
+    if order_list isnt ""
       msg.send order_list
     return
 
-  robot.hear /clear orders/i, (msg) ->
+  robot.hear /^clear orders$/i, (msg) ->
     lunches.clear()
     msg.send "POOF! All gone!"
     return
 
-  robot.hear /cancel my order/i, (msg) ->
+  robot.hear /^cancel my order$/i, (msg) ->
     username = msg.message.user.name
     lunches.cancel(username)
     msg.send "Done. But you'll be hungry!"
@@ -86,9 +77,9 @@ module.exports = (robot) ->
 
   robot.hear /lunch help/i, (msg) ->
     msg.send "order me <your order> - to place an order\n" + 
-      "what's my order - to refresh your memory\n" +
+      "show my order - to refresh your memory\n" +
       "cancel my order - to go on hunger strike\n" +
-      "show orders - to see who wants what\n" +
+      "show all orders - to see who wants what\n" +
       "clear orders - reset the order list\n"
     return
 
