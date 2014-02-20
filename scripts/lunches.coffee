@@ -18,6 +18,7 @@ module.exports = (robot) ->
       robot.brain.data.lunches.orders[name]
 
     add: (name, order) ->
+      console.log "Adding: " + order + " for " + name
       robot.brain.data.lunches.orders[name] = order
       if name not in robot.brain.data.lunches.last
         robot.brain.data.lunches.last.push(name)
