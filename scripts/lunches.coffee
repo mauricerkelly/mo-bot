@@ -66,8 +66,8 @@ module.exports = (robot) ->
     #   order_list += "Last order by: " + lunches.last_order()
 
     console.log order_list
-    # if order_list isnt ""
-    msg.send order_list
+    if order_list isnt ""
+      msg.send order_list
     return
 
   robot.hear /clear orders/i, (msg) ->
