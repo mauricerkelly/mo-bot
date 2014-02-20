@@ -43,18 +43,18 @@ module.exports = (robot) ->
     order_count: () ->
       Object.keys(robot.brain.data.lunches.orders).length
 
-  robot.hear /^order me (.*)/i, (msg) ->
+  robot.hear /order me (.*)/i, (msg) ->
     username = msg.message.user.name
     msg.send "Got it (" + msg.match[1] + ")"
     lunches.add(username, msg.match[1])
     return
 
-  robot.hear /^show my order/i, (msg) ->
+  robot.hear /show my order/i, (msg) ->
     username = msg.message.user.name
     msg.send lunches.get(username) + " (by " + username + ")"
     return
 
-  robot.hear /^show all orders/i, (msg) ->
+  robot.hear /show all orders/i, (msg) ->
     order_list = ""
     for own user, order of lunches.all_orders()
       order_list += order + " (by " + user + ")\n"
@@ -67,12 +67,12 @@ module.exports = (robot) ->
       msg.send order_list
     return
 
-  robot.hear /^clear orders/i, (msg) ->
+  robot.hear /clear orders/i, (msg) ->
     lunches.clear()
     msg.send "POOF! All gone!"
     return
 
-  robot.hear /^cancel my order/i, (msg) ->
+  robot.hear /cancel my order/i, (msg) ->
     username = msg.message.user.name
     lunches.cancel(username)
     msg.send "Done. But you'll be hungry!"
