@@ -62,12 +62,12 @@ module.exports = (robot) ->
     for own user, order of lunches.all_orders()
       order_list += order + " (by " + user + ")\n"
 
-    if (lunches.order_count() > 0)
-      order_list += "Last order by: " + lunches.last_order()
+    # if (lunches.order_count() > 0)
+    #   order_list += "Last order by: " + lunches.last_order()
 
     console.log order_list
-    if order_list isnt ""
-      msg.send order_list
+    # if order_list isnt ""
+    msg.send order_list
     return
 
   robot.hear /clear orders/i, (msg) ->
