@@ -62,7 +62,7 @@ module.exports = (robot) ->
     for own user, order of lunches.all_orders()
       order_list += order + " (by " + user + ")\n"
 
-    console.log "Order count: " + lunchers.order_count()
+    console.log "Order count: " + lunches.order_count()
     # if (lunches.order_count() > 0)
     #   order_list += "Last order by: " + lunches.last_order()
 
