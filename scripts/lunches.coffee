@@ -52,6 +52,12 @@ module.exports = (robot) ->
     lunches.add(username, msg.match[1])
     return
 
+  robot.hear /order for (.*): (.*)/i, (msg) ->
+    username = msg.match[1]
+    msg.send "Got it (" + msg.match[2] + ") for " + username
+    lunches.add(username, msg.match[2])
+    return
+
   robot.hear /show my order/i, (msg) ->
     username = msg.message.user.name
     msg.send lunches.get(username) + " (by " + username + ")"
@@ -59,8 +65,10 @@ module.exports = (robot) ->
 
   robot.hear /show all orders/i, (msg) ->
     order_list = ""
+    running_count = 1
     for own user, order of lunches.all_orders()
-      order_list += order + " (by " + user + ")\n"
+      order_list += running_count + ". " + order + " (by " + user + ")\n"
+      running_count++
 
     console.log "Order count: " + lunches.order_count()
     # if (lunches.order_count() > 0)
@@ -82,10 +90,18 @@ module.exports = (robot) ->
     msg.send "Done. But you'll be hungry!"
     return
 
-  robot.hear /lunch help/i, (msg) ->
+  robot.hear /cancel order for (.*)/i, (msg) ->
+    username = msg.match[1]
+    lunches.cancel(username)
+    msg.send "But " + username + " will be hungry! On your head be it!"
+    return
+
+  robot.hear /^lunch help$/i, (msg) ->
     msg.send "order me <your order> - to place an order\n" + 
+      "order for <name>: <their order> - to place an order for someone else\n" + 
       "show my order - to refresh your memory\n" +
       "cancel my order - to go on hunger strike\n" +
+      "cancel order for <name> - to cancel someone else's order\n" + 
       "show all orders - to see who wants what\n" +
       "clear orders - reset the order list\n"
     return
